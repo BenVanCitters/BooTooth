@@ -23,21 +23,18 @@
 
     //BLUETOOTH
     
-    //managers
-//    NSMutableDictionary* myCentralOptions = [[NSMutableDictionary alloc] init];
-//    CBCentralManager* myCentralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil options:myCentralOptions];
-    
+    //manager
     self.statusLabel.text = @"";
     
     NSMutableDictionary* myPeripheralOptions = [[NSMutableDictionary alloc] init];
-    self.myPeripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:nil options:myPeripheralOptions];
-
+    self.myPeripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self
+                                                                       queue:nil
+                                                                     options:myPeripheralOptions];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 
@@ -81,7 +78,6 @@
         [self.myPeripheralManager startAdvertising:@{ CBAdvertisementDataServiceUUIDsKey : @[myService.UUID],
                                                       CBAdvertisementDataLocalNameKey : @"XXXXX"}];
             self.statusLabel.text = @"";
-        
     }
 }
 
