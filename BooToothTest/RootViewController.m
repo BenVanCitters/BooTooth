@@ -48,6 +48,7 @@
     // Add the page view controller's gesture recognizers to the book view controller's view so that the gestures are started more easily.
     self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
     
+    //BLUETOOTH
     
     NSMutableDictionary* myCentralOptions = [[NSMutableDictionary alloc] init];
     CBCentralManager* myCentralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil options:myCentralOptions];
@@ -56,9 +57,20 @@
     NSMutableDictionary* myPeripheralOptions = [[NSMutableDictionary alloc] init];
     CBPeripheralManager* myPeripheralMgr = [[CBPeripheralManager alloc] initWithDelegate:self queue:nil options:myPeripheralOptions];
     
+    
+    CBUUID *myCustomServiceUUID = [CBUUID UUIDWithString:@"71DA3FD1-7E10-41C1-B16F-4430B506CDE7"];
+    CBUUID *myCharacteristicUUID = [CBUUID UUIDWithString:@"473CAEE9-6B16-4982-95DD-A87F57044B3F"];
+    CBMutableCharacteristic* myCharacteristic = [[CBMutableCharacteristic alloc] initWithType:myCharacteristicUUID
+                                                                                   properties:CBCharacteristicPropertyRead
+                                                                                        value:[[NSData alloc] init]
+                                                                                  permissions:CBAttributePermissionsReadable];
+    CBMutableService* myService = [[CBMutableService alloc] initWithType:myCustomServiceUUID
+                                                                 primary:YES];
+    myService.characteristics = @[myCharacteristic];
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
@@ -125,7 +137,7 @@
  */
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central
 {
-    
+    NSLog(@"%d",central.state);
 }
 
 
@@ -144,10 +156,10 @@
  *  @seealso            CBCentralManagerRestoredStateScanOptionsKey;
  *
  */
-- (void)centralManager:(CBCentralManager *)central willRestoreState:(NSDictionary *)dict
-{
-    
-}
+//- (void)centralManager:(CBCentralManager *)central willRestoreState:(NSDictionary *)dict
+//{
+//    
+//}
 
 /*!
  *  @method centralManager:didRetrievePeripherals:
@@ -266,7 +278,7 @@
  */
 - (void)peripheralManagerDidUpdateState:(CBPeripheralManager *)peripheral
 {
-    
+    NSLog(@"%d",peripheral.state);
 }
 
 /*!
@@ -283,10 +295,10 @@
  *  @seealso            CBPeripheralManagerRestoredStateAdvertisementDataKey;
  *
  */
-- (void)peripheralManager:(CBPeripheralManager *)peripheral willRestoreState:(NSDictionary *)dict
-{
-    
-}
+//- (void)peripheralManager:(CBPeripheralManager *)peripheral willRestoreState:(NSDictionary *)dict
+//{
+//    
+//}
 
 /*!
  *  @method peripheralManagerDidStartAdvertising:error:
