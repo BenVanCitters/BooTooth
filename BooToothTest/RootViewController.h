@@ -13,5 +13,7 @@
 
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 
+@property (strong, nonatomic) CBPeripheralManager* myPeripheralManager;
+
 @end
 

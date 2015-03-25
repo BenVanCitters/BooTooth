@@ -56,25 +56,25 @@
     
     
     NSMutableDictionary* myPeripheralOptions = [[NSMutableDictionary alloc] init];
-    CBPeripheralManager* myPeripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:nil options:myPeripheralOptions];
+    self.myPeripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:nil options:myPeripheralOptions];
     
     
     //services and characteristics
-    CBUUID *myCustomServiceUUID = [CBUUID UUIDWithString:@"71DA3FD1-7E10-41C1-B16F-4430B506CDE7"];
-    CBUUID *myCharacteristicUUID = [CBUUID UUIDWithString:@"473CAEE9-6B16-4982-95DD-A87F57044B3F"];
-    CBMutableCharacteristic* myCharacteristic = [[CBMutableCharacteristic alloc] initWithType:myCharacteristicUUID
-                                                                                   properties:CBCharacteristicPropertyRead
-                                                                                        value:[[NSData alloc] init]
-                                                                                  permissions:CBAttributePermissionsReadable];
-    CBMutableService* myService = [[CBMutableService alloc] initWithType:myCustomServiceUUID
-                                                                 primary:YES];
-    myService.characteristics = @[myCharacteristic];
-    
-    [myPeripheralManager addService:myService];
-    
-    //publishing the services and characteristics
-    [myPeripheralManager startAdvertising:@{ CBAdvertisementDataServiceUUIDsKey :
-                                                 @[myService.UUID] }];
+//    CBUUID *myCustomServiceUUID = [CBUUID UUIDWithString:@"71DA3FD1-7E10-41C1-B16F-4430B506CDE7"];
+//    CBUUID *myCharacteristicUUID = [CBUUID UUIDWithString:@"473CAEE9-6B16-4982-95DD-A87F57044B3F"];
+//    CBMutableCharacteristic* myCharacteristic = [[CBMutableCharacteristic alloc] initWithType:myCharacteristicUUID
+//                                                                                   properties:CBCharacteristicPropertyRead
+//                                                                                        value:[[NSData alloc] init]
+//                                                                                  permissions:CBAttributePermissionsReadable];
+//    CBMutableService* myService = [[CBMutableService alloc] initWithType:myCustomServiceUUID
+//                                                                 primary:YES];
+//    myService.characteristics = @[myCharacteristic];
+//    
+//    [self.myPeripheralManager addService:myService];
+//    
+//    //publishing the services and characteristics
+//    [self.myPeripheralManager startAdvertising:@{ CBAdvertisementDataServiceUUIDsKey :
+//                                                 @[myService.UUID] }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -126,148 +126,6 @@
 
 
 #pragma mark
-#pragma mark CBCentralManagerDelegate
-
-
-/*!
- *  @method peripheralManagerDidUpdateState:
- *
- *  @param peripheral   The peripheral manager whose state has changed.
- *
- *  @discussion         Invoked whenever the peripheral manager's state has been updated. Commands should only be issued when the state is
- *                      <code>CBPeripheralManagerStatePoweredOn</code>. A state below <code>CBPeripheralManagerStatePoweredOn</code>
- *                      implies that advertisement has paused and any connected centrals have been disconnected. If the state moves below
- *                      <code>CBPeripheralManagerStatePoweredOff</code>, advertisement is stopped and must be explicitly restarted, and the
- *                      local database is cleared and all services must be re-added.
- *
- *  @see                state
- *
- */
-- (void)centralManagerDidUpdateState:(CBCentralManager *)central
-{
-    NSLog(@"%d",central.state);
-}
-
-
-/*!
- *  @method centralManager:willRestoreState:
- *
- *  @param central      The central manager providing this information.
- *  @param dict			A dictionary containing information about <i>central</i> that was preserved by the system at the time the app was terminated.
- *
- *  @discussion			For apps that opt-in to state preservation and restoration, this is the first method invoked when your app is relaunched into
- *						the background to complete some Bluetooth-related task. Use this method to synchronize your app's state with the state of the
- *						Bluetooth system.
- *
- *  @seealso            CBCentralManagerRestoredStatePeripheralsKey;
- *  @seealso            CBCentralManagerRestoredStateScanServicesKey;
- *  @seealso            CBCentralManagerRestoredStateScanOptionsKey;
- *
- */
-//- (void)centralManager:(CBCentralManager *)central willRestoreState:(NSDictionary *)dict
-//{
-//    
-//}
-
-/*!
- *  @method centralManager:didRetrievePeripherals:
- *
- *  @param central      The central manager providing this information.
- *  @param peripherals  A list of <code>CBPeripheral</code> objects.
- *
- *  @discussion         This method returns the result of a {@link retrievePeripherals} call, with the peripheral(s) that the central manager was
- *                      able to match to the provided UUID(s).
- *
- */
-- (void)centralManager:(CBCentralManager *)central didRetrievePeripherals:(NSArray *)peripherals
-{
-    NSLog(@"centralManager didRetrievePeripherals");
-}
-
-/*!
- *  @method centralManager:didRetrieveConnectedPeripherals:
- *
- *  @param central      The central manager providing this information.
- *  @param peripherals  A list of <code>CBPeripheral</code> objects representing all peripherals currently connected to the system.
- *
- *  @discussion         This method returns the result of a {@link retrieveConnectedPeripherals} call.
- *
- */
-- (void)centralManager:(CBCentralManager *)central didRetrieveConnectedPeripherals:(NSArray *)peripherals
-{
-    NSLog(@"centralManager didRetrieveConnectedPeripherals");
-}
-
-/*!
- *  @method centralManager:didDiscoverPeripheral:advertisementData:RSSI:
- *
- *  @param central              The central manager providing this update.
- *  @param peripheral           A <code>CBPeripheral</code> object.
- *  @param advertisementData    A dictionary containing any advertisement and scan response data.
- *  @param RSSI                 The current RSSI of <i>peripheral</i>, in dBm. A value of <code>127</code> is reserved and indicates the RSSI
- *								was not available.
- *
- *  @discussion                 This method is invoked while scanning, upon the discovery of <i>peripheral</i> by <i>central</i>. A discovered peripheral must
- *                              be retained in order to use it; otherwise, it is assumed to not be of interest and will be cleaned up by the central manager. For
- *                              a list of <i>advertisementData</i> keys, see {@link CBAdvertisementDataLocalNameKey} and other similar constants.
- *
- *  @seealso                    CBAdvertisementData.h
- *
- */
-- (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI
-{
-    NSLog(@"centralManager didDiscoverPeripheral");
-}
-
-/*!
- *  @method centralManager:didConnectPeripheral:
- *
- *  @param central      The central manager providing this information.
- *  @param peripheral   The <code>CBPeripheral</code> that has connected.
- *
- *  @discussion         This method is invoked when a connection initiated by {@link connectPeripheral:options:} has succeeded.
- *
- */
-- (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral
-{
-    NSLog(@"centralManager didConnectPeripheral");
-}
-
-/*!
- *  @method centralManager:didFailToConnectPeripheral:error:
- *
- *  @param central      The central manager providing this information.
- *  @param peripheral   The <code>CBPeripheral</code> that has failed to connect.
- *  @param error        The cause of the failure.
- *
- *  @discussion         This method is invoked when a connection initiated by {@link connectPeripheral:options:} has failed to complete. As connection attempts do not
- *                      timeout, the failure of a connection is atypical and usually indicative of a transient issue.
- *
- */
-- (void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
-{
-    NSLog(@"centralManager didFailToConnectPeripheral");
-}
-
-/*!
- *  @method centralManager:didDisconnectPeripheral:error:
- *
- *  @param central      The central manager providing this information.
- *  @param peripheral   The <code>CBPeripheral</code> that has disconnected.
- *  @param error        If an error occurred, the cause of the failure.
- *
- *  @discussion         This method is invoked upon the disconnection of a peripheral that was connected by {@link connectPeripheral:options:}. If the disconnection
- *                      was not initiated by {@link cancelPeripheralConnection}, the cause will be detailed in the <i>error</i> parameter. Once this method has been
- *                      called, no more methods will be invoked on <i>peripheral</i>'s <code>CBPeripheralDelegate</code>.
- *
- */
-- (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
-{
-    NSLog(@"centralManager didDisconnectPeripheral");
-}
-
-
-#pragma mark
 #pragma mark CBPeripheralManagerDelegate
 
 /*!
@@ -286,7 +144,28 @@
  */
 - (void)peripheralManagerDidUpdateState:(CBPeripheralManager *)peripheral
 {
-    NSLog(@"%d",peripheral.state);
+    NSLog(@"peripheralManager DidUpdateState %d",peripheral.state);
+
+    if(peripheral.state == CBPeripheralManagerStatePoweredOn)
+    {
+        //services and characteristics
+        CBUUID *myCustomServiceUUID = [CBUUID UUIDWithString:@"71DA3FD1-7E10-41C1-B16F-4430B506CDE7"];
+        CBUUID *myCharacteristicUUID = [CBUUID UUIDWithString:@"473CAEE9-6B16-4982-95DD-A87F57044B3F"];
+        CBMutableCharacteristic* myCharacteristic = [[CBMutableCharacteristic alloc] initWithType:myCharacteristicUUID
+                                                                                       properties:CBCharacteristicPropertyRead
+                                                                                            value:[[NSData alloc] init]
+                                                                                      permissions:CBAttributePermissionsReadable];
+        CBMutableService* myService = [[CBMutableService alloc] initWithType:myCustomServiceUUID
+                                                                     primary:YES];
+        myService.characteristics = @[myCharacteristic];
+
+        [self.myPeripheralManager addService:myService];
+
+        //publishing the services and characteristics
+        [self.myPeripheralManager startAdvertising:@{ CBAdvertisementDataServiceUUIDsKey : @[myService.UUID],
+                                                      CBAdvertisementDataLocalNameKey : @"XXXXX"}];
+        
+    }
 }
 
 /*!
