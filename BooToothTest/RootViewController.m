@@ -10,6 +10,7 @@
 #import "ModelController.h"
 #import "DataViewController.h"
 
+
 @interface RootViewController ()
 
 @property (readonly, strong, nonatomic) ModelController *modelController;
@@ -46,6 +47,15 @@
 
     // Add the page view controller's gesture recognizers to the book view controller's view so that the gestures are started more easily.
     self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
+    
+    
+    NSMutableDictionary* myCentralOptions = [[NSMutableDictionary alloc] init];
+    CBCentralManager* myCentralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil options:myCentralOptions];
+    
+    
+    NSMutableDictionary* myPeripheralOptions = [[NSMutableDictionary alloc] init];
+    CBPeripheralManager* myPeripheralMgr = [[CBPeripheralManager alloc] initWithDelegate:self queue:nil options:myPeripheralOptions];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -94,4 +104,299 @@
     return UIPageViewControllerSpineLocationMid;
 }
 
+
+#pragma mark
+#pragma mark CBCentralManagerDelegate
+
+
+/*!
+ *  @method peripheralManagerDidUpdateState:
+ *
+ *  @param peripheral   The peripheral manager whose state has changed.
+ *
+ *  @discussion         Invoked whenever the peripheral manager's state has been updated. Commands should only be issued when the state is
+ *                      <code>CBPeripheralManagerStatePoweredOn</code>. A state below <code>CBPeripheralManagerStatePoweredOn</code>
+ *                      implies that advertisement has paused and any connected centrals have been disconnected. If the state moves below
+ *                      <code>CBPeripheralManagerStatePoweredOff</code>, advertisement is stopped and must be explicitly restarted, and the
+ *                      local database is cleared and all services must be re-added.
+ *
+ *  @see                state
+ *
+ */
+- (void)centralManagerDidUpdateState:(CBCentralManager *)central
+{
+    
+}
+
+
+/*!
+ *  @method centralManager:willRestoreState:
+ *
+ *  @param central      The central manager providing this information.
+ *  @param dict			A dictionary containing information about <i>central</i> that was preserved by the system at the time the app was terminated.
+ *
+ *  @discussion			For apps that opt-in to state preservation and restoration, this is the first method invoked when your app is relaunched into
+ *						the background to complete some Bluetooth-related task. Use this method to synchronize your app's state with the state of the
+ *						Bluetooth system.
+ *
+ *  @seealso            CBCentralManagerRestoredStatePeripheralsKey;
+ *  @seealso            CBCentralManagerRestoredStateScanServicesKey;
+ *  @seealso            CBCentralManagerRestoredStateScanOptionsKey;
+ *
+ */
+- (void)centralManager:(CBCentralManager *)central willRestoreState:(NSDictionary *)dict
+{
+    
+}
+
+/*!
+ *  @method centralManager:didRetrievePeripherals:
+ *
+ *  @param central      The central manager providing this information.
+ *  @param peripherals  A list of <code>CBPeripheral</code> objects.
+ *
+ *  @discussion         This method returns the result of a {@link retrievePeripherals} call, with the peripheral(s) that the central manager was
+ *                      able to match to the provided UUID(s).
+ *
+ */
+- (void)centralManager:(CBCentralManager *)central didRetrievePeripherals:(NSArray *)peripherals
+{
+    
+}
+
+/*!
+ *  @method centralManager:didRetrieveConnectedPeripherals:
+ *
+ *  @param central      The central manager providing this information.
+ *  @param peripherals  A list of <code>CBPeripheral</code> objects representing all peripherals currently connected to the system.
+ *
+ *  @discussion         This method returns the result of a {@link retrieveConnectedPeripherals} call.
+ *
+ */
+- (void)centralManager:(CBCentralManager *)central didRetrieveConnectedPeripherals:(NSArray *)peripherals
+{
+    
+}
+
+/*!
+ *  @method centralManager:didDiscoverPeripheral:advertisementData:RSSI:
+ *
+ *  @param central              The central manager providing this update.
+ *  @param peripheral           A <code>CBPeripheral</code> object.
+ *  @param advertisementData    A dictionary containing any advertisement and scan response data.
+ *  @param RSSI                 The current RSSI of <i>peripheral</i>, in dBm. A value of <code>127</code> is reserved and indicates the RSSI
+ *								was not available.
+ *
+ *  @discussion                 This method is invoked while scanning, upon the discovery of <i>peripheral</i> by <i>central</i>. A discovered peripheral must
+ *                              be retained in order to use it; otherwise, it is assumed to not be of interest and will be cleaned up by the central manager. For
+ *                              a list of <i>advertisementData</i> keys, see {@link CBAdvertisementDataLocalNameKey} and other similar constants.
+ *
+ *  @seealso                    CBAdvertisementData.h
+ *
+ */
+- (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI
+{
+    
+}
+
+/*!
+ *  @method centralManager:didConnectPeripheral:
+ *
+ *  @param central      The central manager providing this information.
+ *  @param peripheral   The <code>CBPeripheral</code> that has connected.
+ *
+ *  @discussion         This method is invoked when a connection initiated by {@link connectPeripheral:options:} has succeeded.
+ *
+ */
+- (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral
+{
+    
+}
+
+/*!
+ *  @method centralManager:didFailToConnectPeripheral:error:
+ *
+ *  @param central      The central manager providing this information.
+ *  @param peripheral   The <code>CBPeripheral</code> that has failed to connect.
+ *  @param error        The cause of the failure.
+ *
+ *  @discussion         This method is invoked when a connection initiated by {@link connectPeripheral:options:} has failed to complete. As connection attempts do not
+ *                      timeout, the failure of a connection is atypical and usually indicative of a transient issue.
+ *
+ */
+- (void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
+{
+    
+}
+
+/*!
+ *  @method centralManager:didDisconnectPeripheral:error:
+ *
+ *  @param central      The central manager providing this information.
+ *  @param peripheral   The <code>CBPeripheral</code> that has disconnected.
+ *  @param error        If an error occurred, the cause of the failure.
+ *
+ *  @discussion         This method is invoked upon the disconnection of a peripheral that was connected by {@link connectPeripheral:options:}. If the disconnection
+ *                      was not initiated by {@link cancelPeripheralConnection}, the cause will be detailed in the <i>error</i> parameter. Once this method has been
+ *                      called, no more methods will be invoked on <i>peripheral</i>'s <code>CBPeripheralDelegate</code>.
+ *
+ */
+- (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
+{
+    
+}
+
+
+#pragma mark
+#pragma mark CBPeripheralManagerDelegate
+
+/*!
+ *  @method peripheralManagerDidUpdateState:
+ *
+ *  @param peripheral   The peripheral manager whose state has changed.
+ *
+ *  @discussion         Invoked whenever the peripheral manager's state has been updated. Commands should only be issued when the state is
+ *                      <code>CBPeripheralManagerStatePoweredOn</code>. A state below <code>CBPeripheralManagerStatePoweredOn</code>
+ *                      implies that advertisement has paused and any connected centrals have been disconnected. If the state moves below
+ *                      <code>CBPeripheralManagerStatePoweredOff</code>, advertisement is stopped and must be explicitly restarted, and the
+ *                      local database is cleared and all services must be re-added.
+ *
+ *  @see                state
+ *
+ */
+- (void)peripheralManagerDidUpdateState:(CBPeripheralManager *)peripheral
+{
+    
+}
+
+/*!
+ *  @method peripheralManager:willRestoreState:
+ *
+ *  @param peripheral	The peripheral manager providing this information.
+ *  @param dict			A dictionary containing information about <i>peripheral</i> that was preserved by the system at the time the app was terminated.
+ *
+ *  @discussion			For apps that opt-in to state preservation and restoration, this is the first method invoked when your app is relaunched into
+ *						the background to complete some Bluetooth-related task. Use this method to synchronize your app's state with the state of the
+ *						Bluetooth system.
+ *
+ *  @seealso            CBPeripheralManagerRestoredStateServicesKey;
+ *  @seealso            CBPeripheralManagerRestoredStateAdvertisementDataKey;
+ *
+ */
+- (void)peripheralManager:(CBPeripheralManager *)peripheral willRestoreState:(NSDictionary *)dict
+{
+    
+}
+
+/*!
+ *  @method peripheralManagerDidStartAdvertising:error:
+ *
+ *  @param peripheral   The peripheral manager providing this information.
+ *  @param error        If an error occurred, the cause of the failure.
+ *
+ *  @discussion         This method returns the result of a @link startAdvertising: @/link call. If advertisement could
+ *                      not be started, the cause will be detailed in the <i>error</i> parameter.
+ *
+ */
+- (void)peripheralManagerDidStartAdvertising:(CBPeripheralManager *)peripheral error:(NSError *)error
+{
+    
+}
+
+/*!
+ *  @method peripheralManager:didAddService:error:
+ *
+ *  @param peripheral   The peripheral manager providing this information.
+ *  @param service      The service that was added to the local database.
+ *  @param error        If an error occurred, the cause of the failure.
+ *
+ *  @discussion         This method returns the result of an @link addService: @/link call. If the service could
+ *                      not be published to the local database, the cause will be detailed in the <i>error</i> parameter.
+ *
+ */
+- (void)peripheralManager:(CBPeripheralManager *)peripheral didAddService:(CBService *)service error:(NSError *)error
+{
+    
+}
+
+/*!
+ *  @method peripheralManager:central:didSubscribeToCharacteristic:
+ *
+ *  @param peripheral       The peripheral manager providing this update.
+ *  @param central          The central that issued the command.
+ *  @param characteristic   The characteristic on which notifications or indications were enabled.
+ *
+ *  @discussion             This method is invoked when a central configures <i>characteristic</i> to notify or indicate.
+ *                          It should be used as a cue to start sending updates as the characteristic value changes.
+ *
+ */
+- (void)peripheralManager:(CBPeripheralManager *)peripheral central:(CBCentral *)central didSubscribeToCharacteristic:(CBCharacteristic *)characteristic
+{
+    
+}
+
+/*!
+ *  @method peripheralManager:central:didUnsubscribeFromCharacteristic:
+ *
+ *  @param peripheral       The peripheral manager providing this update.
+ *  @param central          The central that issued the command.
+ *  @param characteristic   The characteristic on which notifications or indications were disabled.
+ *
+ *  @discussion             This method is invoked when a central removes notifications/indications from <i>characteristic</i>.
+ *
+ */
+- (void)peripheralManager:(CBPeripheralManager *)peripheral central:(CBCentral *)central didUnsubscribeFromCharacteristic:(CBCharacteristic *)characteristic
+{
+    
+}
+
+/*!
+ *  @method peripheralManager:didReceiveReadRequest:
+ *
+ *  @param peripheral   The peripheral manager requesting this information.
+ *  @param request      A <code>CBATTRequest</code> object.
+ *
+ *  @discussion         This method is invoked when <i>peripheral</i> receives an ATT request for a characteristic with a dynamic value.
+ *                      For every invocation of this method, @link respondToRequest:withResult: @/link must be called.
+ *
+ *  @see                CBATTRequest
+ *
+ */
+- (void)peripheralManager:(CBPeripheralManager *)peripheral didReceiveReadRequest:(CBATTRequest *)request
+{
+    
+}
+
+/*!
+ *  @method peripheralManager:didReceiveWriteRequests:
+ *
+ *  @param peripheral   The peripheral manager requesting this information.
+ *  @param requests     A list of one or more <code>CBATTRequest</code> objects.
+ *
+ *  @discussion         This method is invoked when <i>peripheral</i> receives an ATT request or command for one or more characteristics with a dynamic value.
+ *                      For every invocation of this method, @link respondToRequest:withResult: @/link should be called exactly once. If <i>requests</i> contains
+ *                      multiple requests, they must be treated as an atomic unit. If the execution of one of the requests would cause a failure, the request
+ *                      and error reason should be provided to <code>respondToRequest:withResult:</code> and none of the requests should be executed.
+ *
+ *  @see                CBATTRequest
+ *
+ */
+- (void)peripheralManager:(CBPeripheralManager *)peripheral didReceiveWriteRequests:(NSArray *)requests
+{
+    
+}
+
+/*!
+ *  @method peripheralManagerIsReadyToUpdateSubscribers:
+ *
+ *  @param peripheral   The peripheral manager providing this update.
+ *
+ *  @discussion         This method is invoked after a failed call to @link updateValue:forCharacteristic:onSubscribedCentrals: @/link, when <i>peripheral</i> is again
+ *                      ready to send characteristic value updates.
+ *
+ */
+- (void)peripheralManagerIsReadyToUpdateSubscribers:(CBPeripheralManager *)peripheral
+{
+    
+}
 @end

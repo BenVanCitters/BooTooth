@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreBluetooth/CoreBluetooth.h>
 
-@interface RootViewController : UIViewController <UIPageViewControllerDelegate>
+@interface RootViewController : UIViewController <UIPageViewControllerDelegate, CBCentralManagerDelegate, CBPeripheralManagerDelegate>
 
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 
