@@ -9,11 +9,11 @@
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
 
-@interface RootViewController : UIViewController <UIPageViewControllerDelegate, CBCentralManagerDelegate, CBPeripheralManagerDelegate>
-
-@property (strong, nonatomic) UIPageViewController *pageViewController;
+@interface RootViewController : UIViewController <CBCentralManagerDelegate, CBPeripheralManagerDelegate>
 
 @property (strong, nonatomic) CBPeripheralManager* myPeripheralManager;
+
+@property (strong, nonatomic) IBOutlet UILabel* statusLabel;
 
 @end
 
