@@ -50,14 +50,16 @@
     
     //BLUETOOTH
     
-    NSMutableDictionary* myCentralOptions = [[NSMutableDictionary alloc] init];
-    CBCentralManager* myCentralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil options:myCentralOptions];
+    //managers
+//    NSMutableDictionary* myCentralOptions = [[NSMutableDictionary alloc] init];
+//    CBCentralManager* myCentralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil options:myCentralOptions];
     
     
     NSMutableDictionary* myPeripheralOptions = [[NSMutableDictionary alloc] init];
-    CBPeripheralManager* myPeripheralMgr = [[CBPeripheralManager alloc] initWithDelegate:self queue:nil options:myPeripheralOptions];
+    CBPeripheralManager* myPeripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:nil options:myPeripheralOptions];
     
     
+    //services and characteristics
     CBUUID *myCustomServiceUUID = [CBUUID UUIDWithString:@"71DA3FD1-7E10-41C1-B16F-4430B506CDE7"];
     CBUUID *myCharacteristicUUID = [CBUUID UUIDWithString:@"473CAEE9-6B16-4982-95DD-A87F57044B3F"];
     CBMutableCharacteristic* myCharacteristic = [[CBMutableCharacteristic alloc] initWithType:myCharacteristicUUID
@@ -67,6 +69,12 @@
     CBMutableService* myService = [[CBMutableService alloc] initWithType:myCustomServiceUUID
                                                                  primary:YES];
     myService.characteristics = @[myCharacteristic];
+    
+    [myPeripheralManager addService:myService];
+    
+    //publishing the services and characteristics
+    [myPeripheralManager startAdvertising:@{ CBAdvertisementDataServiceUUIDsKey :
+                                                 @[myService.UUID] }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -173,7 +181,7 @@
  */
 - (void)centralManager:(CBCentralManager *)central didRetrievePeripherals:(NSArray *)peripherals
 {
-    
+    NSLog(@"centralManager didRetrievePeripherals");
 }
 
 /*!
@@ -187,7 +195,7 @@
  */
 - (void)centralManager:(CBCentralManager *)central didRetrieveConnectedPeripherals:(NSArray *)peripherals
 {
-    
+    NSLog(@"centralManager didRetrieveConnectedPeripherals");
 }
 
 /*!
@@ -208,7 +216,7 @@
  */
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI
 {
-    
+    NSLog(@"centralManager didDiscoverPeripheral");
 }
 
 /*!
@@ -222,7 +230,7 @@
  */
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral
 {
-    
+    NSLog(@"centralManager didConnectPeripheral");
 }
 
 /*!
@@ -238,7 +246,7 @@
  */
 - (void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
 {
-    
+    NSLog(@"centralManager didFailToConnectPeripheral");
 }
 
 /*!
@@ -255,7 +263,7 @@
  */
 - (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
 {
-    
+    NSLog(@"centralManager didDisconnectPeripheral");
 }
 
 
@@ -312,7 +320,11 @@
  */
 - (void)peripheralManagerDidStartAdvertising:(CBPeripheralManager *)peripheral error:(NSError *)error
 {
-    
+    NSLog(@"peripheralManager DidStartAdvertising");
+    if (error)
+    {
+        NSLog(@"Error advertising: %@", [error localizedDescription]);
+    }
 }
 
 /*!
@@ -328,7 +340,11 @@
  */
 - (void)peripheralManager:(CBPeripheralManager *)peripheral didAddService:(CBService *)service error:(NSError *)error
 {
-    
+    NSLog(@"peripheralManager didAddService");
+    if (error)
+    {
+        NSLog(@"Error publishing service: %@", [error localizedDescription]);
+    }
 }
 
 /*!
@@ -344,7 +360,7 @@
  */
 - (void)peripheralManager:(CBPeripheralManager *)peripheral central:(CBCentral *)central didSubscribeToCharacteristic:(CBCharacteristic *)characteristic
 {
-    
+    NSLog(@"peripheralManager didSubscribeToCharacteristic");
 }
 
 /*!
@@ -359,7 +375,7 @@
  */
 - (void)peripheralManager:(CBPeripheralManager *)peripheral central:(CBCentral *)central didUnsubscribeFromCharacteristic:(CBCharacteristic *)characteristic
 {
-    
+    NSLog(@"peripheralManager didUnsubscribeFromCharacteristic");
 }
 
 /*!
@@ -376,7 +392,7 @@
  */
 - (void)peripheralManager:(CBPeripheralManager *)peripheral didReceiveReadRequest:(CBATTRequest *)request
 {
-    
+   NSLog(@"peripheralManager didReceiveReadRequest");
 }
 
 /*!
@@ -395,7 +411,7 @@
  */
 - (void)peripheralManager:(CBPeripheralManager *)peripheral didReceiveWriteRequests:(NSArray *)requests
 {
-    
+    NSLog(@"peripheralManager didReceiveWriteRequests");
 }
 
 /*!
@@ -409,6 +425,6 @@
  */
 - (void)peripheralManagerIsReadyToUpdateSubscribers:(CBPeripheralManager *)peripheral
 {
-    
+    NSLog(@"peripheralManager IsReadyToUpdateSubscribers");
 }
 @end
