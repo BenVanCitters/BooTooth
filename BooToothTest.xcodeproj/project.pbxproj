@@ -10,8 +10,6 @@
 		0C97C3681AC34CD700C69BC5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C97C3671AC34CD700C69BC5 /* main.m */; };
 		0C97C36B1AC34CD700C69BC5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C97C36A1AC34CD700C69BC5 /* AppDelegate.m */; };
 		0C97C36E1AC34CD700C69BC5 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C97C36D1AC34CD700C69BC5 /* RootViewController.m */; };
-		0C97C3711AC34CD700C69BC5 /* DataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C97C3701AC34CD700C69BC5 /* DataViewController.m */; };
-		0C97C3741AC34CD700C69BC5 /* ModelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C97C3731AC34CD700C69BC5 /* ModelController.m */; };
 		0C97C3771AC34CD700C69BC5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C97C3751AC34CD700C69BC5 /* Main.storyboard */; };
 		0C97C3791AC34CD700C69BC5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C97C3781AC34CD700C69BC5 /* Images.xcassets */; };
 		0C97C37C1AC34CD700C69BC5 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C97C37A1AC34CD700C69BC5 /* LaunchScreen.xib */; };
@@ -36,10 +34,6 @@
 		0C97C36A1AC34CD700C69BC5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		0C97C36C1AC34CD700C69BC5 /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		0C97C36D1AC34CD700C69BC5 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
-		0C97C36F1AC34CD700C69BC5 /* DataViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataViewController.h; sourceTree = "<group>"; };
-		0C97C3701AC34CD700C69BC5 /* DataViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataViewController.m; sourceTree = "<group>"; };
-		0C97C3721AC34CD700C69BC5 /* ModelController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModelController.h; sourceTree = "<group>"; };
-		0C97C3731AC34CD700C69BC5 /* ModelController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModelController.m; sourceTree = "<group>"; };
 		0C97C3761AC34CD700C69BC5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0C97C3781AC34CD700C69BC5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		0C97C37B1AC34CD700C69BC5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -91,10 +85,6 @@
 				0C97C36A1AC34CD700C69BC5 /* AppDelegate.m */,
 				0C97C36C1AC34CD700C69BC5 /* RootViewController.h */,
 				0C97C36D1AC34CD700C69BC5 /* RootViewController.m */,
-				0C97C36F1AC34CD700C69BC5 /* DataViewController.h */,
-				0C97C3701AC34CD700C69BC5 /* DataViewController.m */,
-				0C97C3721AC34CD700C69BC5 /* ModelController.h */,
-				0C97C3731AC34CD700C69BC5 /* ModelController.m */,
 				0C97C3751AC34CD700C69BC5 /* Main.storyboard */,
 				0C97C3781AC34CD700C69BC5 /* Images.xcassets */,
 				0C97C37A1AC34CD700C69BC5 /* LaunchScreen.xib */,
@@ -229,9 +219,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C97C3711AC34CD700C69BC5 /* DataViewController.m in Sources */,
 				0C97C36B1AC34CD700C69BC5 /* AppDelegate.m in Sources */,
-				0C97C3741AC34CD700C69BC5 /* ModelController.m in Sources */,
 				0C97C3681AC34CD700C69BC5 /* main.m in Sources */,
 				0C97C36E1AC34CD700C69BC5 /* RootViewController.m in Sources */,
 			);
@@ -432,6 +420,7 @@
 				0C97C38D1AC34CD700C69BC5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0C97C38E1AC34CD700C69BC5 /* Build configuration list for PBXNativeTarget "BooToothTestTests" */ = {
 			isa = XCConfigurationList;
@@ -440,6 +429,7 @@
 				0C97C3901AC34CD700C69BC5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

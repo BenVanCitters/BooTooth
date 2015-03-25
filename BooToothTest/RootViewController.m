@@ -7,18 +7,15 @@
 //
 
 #import "RootViewController.h"
-#import "ModelController.h"
-#import "DataViewController.h"
 
 
 @interface RootViewController ()
 
-@property (readonly, strong, nonatomic) ModelController *modelController;
 @end
 
 @implementation RootViewController
 
-@synthesize modelController = _modelController;
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
